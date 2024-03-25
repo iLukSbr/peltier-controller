@@ -1,5 +1,6 @@
 #include "components.hpp"
 
+#define ALWAYS_ON
 #define TEMPERATURE_TARGET 15.f
 
 bool is_on;
@@ -24,26 +25,26 @@ void setup(){
 
 void loop() {
     float temperature = thermometer->getTemperatureCelsius();
-    char message[18], tempString[8], degreeSymb[2] = {(char)223,'\0'};
+    char message[18], tempString[8], degreeSymb[4] = {' ',(char)223,'C','\0'};
     dtostrf(temperature, 5, 2, tempString);
     strcpy(message, "Peltier ");
     strcat(message, tempString);
-    strcat(message, " ");
     strcat(message, degreeSymb);
-    strcat(message, "C");
     #ifdef SERIAL_DEBUG
         Serial.println(temperature);
     #endif
     #ifdef __LCD_HPP__
         lcd->print(message);
     #endif
-    if(temperature >= TEMPERATURE_TARGET && !is_on){
-        peltier->on();
-        is_on = true;
-    }
-    else if(temperature < TEMPERATURE_TARGET && is_on){
-        peltier->off();
-        is_on = false;
-    }
-    delay(100);
+    #ifndef ALWAYS_ON
+        if(temperature >= TEMPERATURE_TARGET && !is_on){
+            peltier->on();
+            is_on = true;
+        }
+        else if(temperature < TEMPERATURE_TARGET && is_on){
+            peltier->off();
+            is_on = false;
+        }
+    #endif
+    delay(1000);
 }
