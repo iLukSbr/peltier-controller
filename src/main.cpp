@@ -2,6 +2,8 @@
 
 #define TEMPERATURE_TARGET 15.f
 
+bool is_on;
+
 void setup(){
     #ifdef SERIAL_DEBUG
         Serial.begin(115200);
@@ -16,6 +18,8 @@ void setup(){
     #ifdef __THERMOMETER_HPP__
         thermometer = Thermometer::getInstance();
     #endif
+    peltier->on();
+    is_on = true;
 }
 
 void loop() {
@@ -33,10 +37,13 @@ void loop() {
     #ifdef __LCD_HPP__
         lcd->print(message);
     #endif
-    if(temperature > TEMPERATURE_TARGET){
+    if(temperature >= TEMPERATURE_TARGET && !is_on){
         peltier->on();
-        delay(5000);
-        peltier->off();
+        is_on = true;
     }
-    delay(5000);
+    else if(temperature < TEMPERATURE_TARGET && is_on){
+        peltier->off();
+        is_on = false;
+    }
+    delay(100);
 }
