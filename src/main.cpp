@@ -35,9 +35,8 @@ void loop() {
     #endif
     if(temperature > TEMPERATURE_TARGET){
         peltier->on();
-    }
-    else{
+        delay(5000);
         peltier->off();
     }
-    delay(1000);
+    delay(5000);
 }
