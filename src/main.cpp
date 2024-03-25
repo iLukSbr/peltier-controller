@@ -20,14 +20,20 @@ void setup(){
 
 void loop() {
     float temperature = thermometer->getTemperatureCelsius();
-    char message[16] = "Peltier: ", s[7] = {0};
-    dtostrf(temperature, 5, 2, s);
-    strcat(message, s);
+    char message[18];
+    char tempString[8];
+    char degreeSymb[2] = {(char)223,'\0'};
+    dtostrf(temperature, 5, 2, tempString);
+    strcpy(message, "Peltier ");
+    strcat(message, tempString);
+    strcat(message, " ");
+    strcat(message, degreeSymb);
+    strcat(message, "C");
     #ifdef SERIAL_DEBUG
-        Serial.println(message);
+        Serial.println(temperature);
     #endif
     #ifdef __LCD_HPP__
-        lcd->print(temperature);
+        lcd->print(message);
     #endif
     if(temperature > TEMPERATURE_TARGET){
         peltier->on();
