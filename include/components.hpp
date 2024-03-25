@@ -4,6 +4,12 @@
 #include "Thermometer.hpp"
 #include "Peltier.hpp"
 
-    LCD* lcd = LCD::getInstance();
-    Peltier* peltier = Peltier::getInstance();
-    Thermometer* thermometer = Thermometer::getInstance();
+    #ifdef __LCD_HPP__
+        LCD* lcd = nullptr;
+    #endif
+    #ifdef __PELTIER_HPP__
+        Peltier* peltier = nullptr;
+    #endif
+    #ifdef __THERMOMETER_HPP__
+        Thermometer* thermometer = nullptr;
+    #endif

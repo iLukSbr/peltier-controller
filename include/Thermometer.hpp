@@ -1,13 +1,11 @@
 #include "pch.hpp"
 
 // MAX6675 thermocouple sensor
-#include <max6675.h>
+#include <MAX6675.h>
 
 #ifndef __THERMOMETER_HPP__
     #define __THERMOMETER_HPP__
 
-    #define THERMOMETER_SCK_PIN 13
-    #define THERMOMETER_SO_PIN 12
     #define THERMOMETER_CS_PIN 10
     
     class Thermometer{
@@ -15,7 +13,6 @@
             static Thermometer* getInstance();
             
             float getTemperatureCelsius();
-            float getTemperatureFahrenheit();
 
         private:
             Thermometer();

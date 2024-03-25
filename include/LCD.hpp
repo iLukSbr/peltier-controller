@@ -3,6 +3,7 @@
 #ifndef __LCD_HPP__
     #define __LCD_HPP__
 
+    #include <Wire.h>
     #include <LiquidCrystal_PCF8574.h>
 
     class LCD{

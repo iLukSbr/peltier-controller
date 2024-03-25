@@ -10,14 +10,14 @@ Thermometer* Thermometer::getInstance(){
 }
 
 Thermometer::Thermometer():
-	thermocouple(new MAX6675(THERMOMETER_SCK_PIN, THERMOMETER_CS_PIN, THERMOMETER_SO_PIN))
+	thermocouple(new MAX6675(THERMOMETER_CS_PIN, &SPI))
 {
+	SPI.begin();
+	thermocouple->begin();
+	thermocouple->setSPIspeed(9600);
 }
 
 float Thermometer::getTemperatureCelsius(){
-	return thermocouple->readCelsius();
-}
-
-float Thermometer::getTemperatureFahrenheit(){
-	return thermocouple->readFahrenheit();
+	thermocouple->read();
+	return thermocouple->getTemperature();
 }
