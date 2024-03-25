@@ -1,39 +1,40 @@
-#define __LCD_HPP__
+#include "pch.hpp"
 
-class LCD {
-public:
-    LCD(uint8_t addr, uint8_t cols, uint8_t rows, uint8_t charSize = LCD_5x8DOTS);
-    void init();
+#ifndef __LCD_HPP__
+    #define __LCD_HPP__
 
-    void clear();
-    void home();
+    #include <LiquidCrystal_PCF8574.h>
 
-    void setCursor(uint8_t col, uint8_t row);
+    class LCD{
+        public:
+            static LCD* getInstance();
 
-    void write(uint8_t value);
-    void print(const char* message);
-    void print(int message);
-    void print(float message, uint8_t decimalPlaces = 2);
+            template<typename T>
+            void print(const T& message) {
+                lcd->display();
+                lcd->setBacklight(255);
+                lcd->home();
+                lcd->clear();
+                lcd->print(message);
+            }
 
-    void blinkCursor();
-    void noBlinkCursor();
-    void cursor();
-    void noCursor();
-    void display();
-    void noDisplay();
+            void off();
 
-    void scrollDisplayLeft();
-    void scrollDisplayRight();
-    void leftToRight();
-    void rightToLeft();
-    void autoscroll();
-    void noAutoscroll();
+        private:
+            LCD();
 
-private:
-    uint8_t _addr;
-    uint8_t _cols;
-    uint8_t _rows;
-    uint8_t _charSize;
+            LCD(LCD const&) = delete;// prevent copy construction
 
-    void command(uint8_t value);
-};
+            LCD(LCD&&) = delete;// prevent move construction
+
+            LCD& operator=(LCD const&) = delete;// prevent copy assignment
+
+            LCD& operator=(LCD &&) = delete;// prevent move assignment
+
+            ~LCD() = default;// add default destructor
+
+            static LCD* instance;
+
+            LiquidCrystal_PCF8574* lcd;
+    };
+#endif

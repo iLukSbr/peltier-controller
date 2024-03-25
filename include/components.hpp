@@ -1,11 +1,9 @@
-#ifndef __LCD_HPP__
-    #include "LCD.hpp"
-#endif
+#include "pch.hpp"
 
-#ifndef __MAX6675_HPP__
-    #include "MAX6675.hpp"
-#endif
+#include "LCD.hpp"
+#include "Thermometer.hpp"
+#include "Peltier.hpp"
 
-#ifndef __PELTIER_HPP__
-    #include "Peltier.hpp"
-#endif
+    LCD* lcd = LCD::getInstance();
+    Peltier* peltier = Peltier::getInstance();
+    Thermometer* thermometer = Thermometer::getInstance();

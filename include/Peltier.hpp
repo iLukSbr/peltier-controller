@@ -1,20 +1,28 @@
-#define __PELTIER_HPP__
+#include "pch.hpp"
 
-class Peltier
-{
-public:
-    Peltier(int pwmPin, int enablePin, int thermoPin);
+#ifndef __PELTIER_HPP__
+    #define __PELTIER_HPP__
 
-    void begin(int dutyCycle);
-    void setDutyCycle(int dutyCycle);
-    void enable();
-    void disable();
-    int getDutyCycle();
-    int getThermoTemperature();
+    #define PELTIER_MOSFET_GATE_PIN 3
 
-private:
-    int _pwmPin;
-    int _enablePin;
-    int _thermoPin;
-    int _dutyCycle;
-};
+    class Peltier{
+        public:
+            static Peltier* getInstance();
+            
+            void on();
+            void off();
+
+        private:
+            Peltier();
+
+            Peltier(Peltier const&) = delete;// prevent copy construction
+
+            Peltier(Peltier&&) = delete;// prevent move construction
+
+            Peltier& operator=(Peltier const&) = delete;// prevent copy assignment
+
+            ~Peltier() = default;// add default destructor
+
+            static Peltier* instance;
+    };
+#endif

@@ -1,20 +1,24 @@
 #include "Peltier.hpp"
 
-<<<<<<<<<<<<<<  ✨ Codeium Command ⭐ >>>>>>>>>>>>>>>>
+Peltier* Peltier::instance = nullptr;
 
-void Peltier::begin()
-{
-    pinMode(pin_, OUTPUT);
+Peltier* Peltier::getInstance(){
+	if(!instance){
+		instance = new Peltier();
+	}
+	return instance;
 }
 
-void Peltier::setPower(int power)
+Peltier::Peltier()
 {
-    power = constrain(power, 0, 100);
-    analogWrite(pin_, map(power, 0, 100, 0, 255));
+    pinMode(PELTIER_MOSFET_GATE_PIN, OUTPUT);
+    this->off();
 }
 
-void Peltier::off()
-{
-    analogWrite(pin_, 0);
+void Peltier::on(){
+    digitalWrite(PELTIER_MOSFET_GATE_PIN, HIGH);
 }
-<<<<<<<  4cc8d347-ffa7-4f29-93e2-52c20f17bd94  >>>>>>>
+
+void Peltier::off(){
+    digitalWrite(PELTIER_MOSFET_GATE_PIN, LOW);
+}
