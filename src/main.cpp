@@ -20,9 +20,7 @@ void setup(){
 
 void loop() {
     float temperature = thermometer->getTemperatureCelsius();
-    char message[18];
-    char tempString[8];
-    char degreeSymb[2] = {(char)223,'\0'};
+    char message[18], tempString[8], degreeSymb[2] = {(char)223,'\0'};
     dtostrf(temperature, 5, 2, tempString);
     strcpy(message, "Peltier ");
     strcat(message, tempString);
